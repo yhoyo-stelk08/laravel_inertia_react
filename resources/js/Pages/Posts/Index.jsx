@@ -46,6 +46,9 @@ export default function AllPostPage({ auth, posts }) {
                             rows="5"
                             className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
                         ></textarea>
+                        {errors.body && (
+                            <p className="text-red-400 p-2">{errors.body}</p>
+                        )}
                         <button
                             type="submit"
                             className="mt-2 bg-gray-700 px-4 py-2 rounded-md font-medium text-white"
