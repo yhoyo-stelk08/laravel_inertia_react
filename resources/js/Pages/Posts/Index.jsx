@@ -18,11 +18,16 @@ export default function AllPostPage({ auth, posts }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         {posts.data.map((post) => {
                             return (
-                                <div
-                                    className="p-6 text-gray-900"
-                                    key={post.id}
-                                >
-                                    {post.body}
+                                <div key={post.id} className="mt-4 mb-8">
+                                    <div className="font-semibold  mx-2 pl-4 text-gray-500">
+                                        Posted by {post.user.name}
+                                    </div>
+                                    <div className="px-6 py-2 text-gray-900">
+                                        {post.body}
+                                    </div>
+                                    <h1 className="text-xs mt-1 mb-1 mx-2 pl-4 text-gray-500">
+                                        {post.created_at}
+                                    </h1>
                                 </div>
                             );
                         })}
