@@ -17,7 +17,7 @@ class PostSeeder extends Seeder
         Post::factory()->count(10)->for(User::create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('Stelkers08&'),
         ]))->create();
     }
 }
