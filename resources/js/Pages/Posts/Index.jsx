@@ -1,7 +1,22 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 
 export default function AllPostPage({ auth, posts }) {
+    const { data, setData, post, errors, processing } = useForm({
+        body: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route("posts.store"));
+    };
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        const body = e.target.value;
+        setData("body", body);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -14,11 +29,39 @@ export default function AllPostPage({ auth, posts }) {
             <Head title="Posts" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        {posts.data.map((post) => {
-                            return (
-                                <div key={post.id} className="mt-4 mb-8">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-3">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 "
+                    >
+                        <label htmlFor="body" className="sr-only">
+                            Body
+                        </label>
+                        <textarea
+                            onChange={handleChange}
+                            value={data.body}
+                            name="body"
+                            id="body"
+                            cols="30"
+                            rows="5"
+                            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            className="mt-2 bg-gray-700 px-4 py-2 rounded-md font-medium text-white"
+                            disabled={processing}
+                        >
+                            Post
+                        </button>
+                    </form>
+
+                    {posts.data.map((post) => {
+                        return (
+                            <div
+                                className="bg-white overflow-hidden shadow-sm sm:rounded-lg"
+                                key={post.id}
+                            >
+                                <div className="mt-2 mb-8">
                                     <div className="font-semibold  mx-2 pl-4 text-gray-500">
                                         Posted by {post.user.name}
                                     </div>
@@ -29,9 +72,9 @@ export default function AllPostPage({ auth, posts }) {
                                         {post.created_at}
                                     </h1>
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </AuthenticatedLayout>
