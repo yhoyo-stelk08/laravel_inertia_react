@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function AllPostPage({ auth, posts }) {
     const { data, setData, post, errors, processing, reset, clearErrors } =
@@ -12,6 +13,9 @@ export default function AllPostPage({ auth, posts }) {
         post(route("posts.store"), {
             onSuccess: () => {
                 reset("body");
+                toast.success("Posting Added", {
+                    position: "top-right",
+                });
             },
         });
     };
@@ -44,6 +48,7 @@ export default function AllPostPage({ auth, posts }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-3">
+                    <Toaster />
                     <form
                         onSubmit={handleSubmit}
                         className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 "
