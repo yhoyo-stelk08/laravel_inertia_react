@@ -57,7 +57,9 @@ export default function AllPostPage({ auth, posts }) {
                         )}
                         <button
                             type="submit"
-                            className="mt-2 bg-gray-700 px-4 py-2 rounded-md font-medium text-white"
+                            className={`mt-2 bg-gray-700 px-4 py-2 rounded-md font-medium text-white ${
+                                processing && "opacity-50"
+                            }`}
                             disabled={processing}
                         >
                             Post
