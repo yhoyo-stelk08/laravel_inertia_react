@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,6 +36,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'message' => $request->session()->get('message'),
+            'can_create_post' => [
+                'create_post' => $request->user()->can('create', Post::class)
+            ]
         ];
     }
 }
