@@ -2,9 +2,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function AllPostPage({ auth, posts }) {
-    const { data, setData, post, errors, processing, reset } = useForm({
-        body: "",
-    });
+    const { data, setData, post, errors, processing, reset, clearErrors } =
+        useForm({
+            body: "",
+        });
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,6 +18,7 @@ export default function AllPostPage({ auth, posts }) {
 
     const handleChange = (e) => {
         e.preventDefault();
+        clearErrors("body");
         const body = e.target.value;
         setData("body", body);
     };
