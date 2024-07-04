@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 
 export default function AllPostPage({ auth, posts }) {
     const { data, setData, post, errors, processing, reset, clearErrors } =
@@ -21,6 +21,14 @@ export default function AllPostPage({ auth, posts }) {
         clearErrors("body");
         const body = e.target.value;
         setData("body", body);
+    };
+
+    const refreshPost = (e) => {
+        router.visit(route("posts.index"), {
+            method: "get",
+            only: ["posts"],
+            preserveScroll: true,
+        });
     };
 
     return (
@@ -65,6 +73,20 @@ export default function AllPostPage({ auth, posts }) {
                             Post
                         </button>
                     </form>
+
+                    <div className="flex py-3 justify-center">
+                        {/* <button type="button" onClick={refreshPost}>
+                            Refresh Post
+                        </button> */}
+                        <Link
+                            type="button"
+                            href={route("posts.index")}
+                            only={["posts"]}
+                            preserveScroll
+                        >
+                            Refresh Post
+                        </Link>
+                    </div>
 
                     {posts.data.map((post) => {
                         return (
