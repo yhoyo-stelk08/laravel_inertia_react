@@ -1,7 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
-import { useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export default function AllPostPage({ auth, posts }) {
     const { data, setData, post, errors, processing, reset, clearErrors } =
@@ -11,23 +10,11 @@ export default function AllPostPage({ auth, posts }) {
 
     const page = usePage();
 
-    useEffect(() => {
-        if (page.props?.message) {
-            toast(page.props.message.body, {
-                position: "top-right",
-                type: page.props.message.type,
-            });
-        }
-    }, [page.props.message]);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("posts.store"), {
             onSuccess: () => {
                 reset("body");
-                // toast.success("Posting Added", {
-                //     position: "top-right",
-                // });
             },
         });
     };
