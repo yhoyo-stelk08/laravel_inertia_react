@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -36,7 +37,14 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $user,
             ],
-            'message' => $request->session()->get('message'),
+            // 'message' => $request->session()->get('message'),
+            'message' => collect(Arr::only($request->session()->all(), ['success', 'error']))
+                ->mapWithKeys(function ($value, $key) {
+                    return [
+                        'type' => $key,
+                        'body' => $value,
+                    ];
+                }),
             'can_create_post' => [
                 'create_post' => $user && $user->can('create', Post::class)
             ]
